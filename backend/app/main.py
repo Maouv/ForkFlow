@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from fastapi import Depends, FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.auth import verify_auth
 from app.database import Base, engine
@@ -39,3 +42,10 @@ async def ws_logs(websocket: WebSocket, execution_id: int):
             await websocket.receive_text()
     except WebSocketDisconnect:
         ws_manager.disconnect(execution_id, websocket)
+
+
+# Serve frontend static files if dist exists (non-Docker mode)
+# In Docker, nginx handles frontend separately
+_dist = Path(__file__).resolve().parent.parent.parent / "frontend" / "dist"
+if _dist.exists():
+    app.mount("/", StaticFiles(directory=str(_dist), html=True), name="frontend")

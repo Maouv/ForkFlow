@@ -76,71 +76,36 @@ docker compose up -d --build
 
 ---
 
-## Manual Deploy (Without Docker)
+## Quick Start (Without Docker)
+
+No Docker needed. Two scripts handle everything.
 
 ### Prerequisites
 
 - Python 3.11+
 - Node.js 20+
-- npm 10+
 
-### Backend
-
-```bash
-cd backend
-python -m venv .venv
-source .venv/bin/activate    # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-
-# Configure
-export FORKFLOW_ENCRYPTION_KEY="your-fernet-key"
-export FORKFLOW_USERNAME="admin"
-export FORKFLOW_PASSWORD="changeme"
-
-# Run
-uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
-
-### Frontend
+### Steps
 
 ```bash
-cd frontend
-npm install
-npm run build
+git clone https://github.com/Maouv/ForkFlow.git
+cd ForkFlow
 
-# Serve dist/ with any static server, e.g.:
-npx serve dist -l 3000
-# Or configure nginx/caddy to serve dist/ and proxy /api/* + /ws/* to :8000
+# 1. Setup (check deps, install, build frontend)
+./setup.sh
+
+# 2. Start
+./start.sh
+
+# 3. Open browser
+# http://localhost:8000
 ```
 
-### nginx Config Example
+`setup.sh` does: check Python/Node versions → create `.env` → backend venv + pip install → frontend npm install + build.
 
-```nginx
-server {
-    listen 80;
-    server_name your-domain;
+`start.sh` does: load `.env` → activate venv → run uvicorn (serves both API and frontend in one process).
 
-    # Frontend static files
-    location / {
-        root /path/to/frontend/dist;
-        try_files $uri $uri/ /index.html;
-    }
-
-    # API proxy
-    location /api/ {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-    }
-
-    # WebSocket proxy
-    location /ws/ {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
-```
+That's it. No nginx, no proxy, no second port.
 
 ---
 

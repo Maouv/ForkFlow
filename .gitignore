@@ -48,6 +48,7 @@ node_modules/
 # Sandbox data
 data/
 sandbox/
+.encryption_key
 
 # Alembic versions are tracked, but not the db
 forkflow.db
