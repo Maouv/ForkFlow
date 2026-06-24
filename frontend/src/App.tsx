@@ -29,7 +29,7 @@ function Sidebar({ onNavigate, onChangePassword }: { onNavigate?: () => void; on
   return (
     <aside className="flex h-full w-56 flex-col border-r border-line bg-surface">
       <div className="flex items-center gap-2.5 px-5 py-4">
-        <img src="/logo.jpg" alt="ForkFlow" width="24" height="24" className="shrink-0 rounded-sm" />
+        <img src="/logo.png" alt="ForkFlow" width="24" height="24" className="shrink-0 rounded-sm" />
         <span className="text-[15px] font-semibold tracking-tight text-ink">ForkFlow</span>
       </div>
       <nav className="flex flex-1 flex-col gap-1 px-3 py-2">

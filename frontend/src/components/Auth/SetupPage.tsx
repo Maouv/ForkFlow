@@ -40,7 +40,7 @@ export default function SetupPage({ onDone }: { onDone: () => void }) {
     <div className="flex min-h-screen items-center justify-center bg-base px-4">
       <div className="w-full max-w-xs">
         <div className="mb-6 flex flex-col items-center gap-2">
-          <img src="/logo.jpg" alt="ForkFlow" width="48" height="48" className="rounded-md" />
+          <img src="/logo.png" alt="ForkFlow" width="48" height="48" className="rounded-md" />
           <span className="text-lg font-semibold tracking-tight text-ink">ForkFlow</span>
           <p className="text-[12px] text-dim">Create your admin account</p>
         </div>
