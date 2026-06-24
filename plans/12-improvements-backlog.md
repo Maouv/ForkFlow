@@ -50,16 +50,28 @@ Status: **Recorded** — belum dikerjakan, untuk didiskusikan & dikerjakan di Ph
 - Atau: model jadi dropdown yang populate dari provider config
 - Atau: provider bisa simpan **list of models** (bukan cuma 1 default), agent pilih dari list itu
 
-### 2d. Model Selection — Ambil Konsep dari OpenRouter
+### 2d. Model Auto-Discovery — Parse dari Provider API
 
-**Masalah:** Model selection terlalu manual dan barebones.
+**Masalah:** User harus manual add model-id. Ribet. Provider punya banyak model, user ga hafal ID-nya.
 
-**Target (konsep OpenRouter):**
-- Provider punya list model yang available (bukan cuma 1 `default_model`)
-- Bisa auto-fetch model list dari provider API (misal: `GET /v1/models` untuk OpenAI-compatible)
-- Model picker: search + filter + metadata (context length, price, capabilities)
-- Tampilkan model name yang human-readable (bukan raw ID)
-- Recent/favorite models di atas
+**Target:**
+- Provider connect → auto-fetch model list dari provider API
+- OpenAI-compatible: `GET {base_url}/v1/models` → parse response → simpan semua model
+- Anthropic: `GET https://api.anthropic.com/v1/models` → parse → simpan
+- custom_http: optional model endpoint field di provider config
+- Semua model auto-masuk ke provider itu, user tinggal pilih dari dropdown saat bikin agent
+- Ga perlu manual add model-id sama sekali
+- Refresh button: re-fetch model list kalau provider nambah model baru
+- Cache di DB (provider_models table), refresh on-demand
+
+**Flow:**
+1. User bikin provider → isi base_url + api_key → Save
+2. Backend auto-call `{base_url}/v1/models` dengan api_key
+3. Parse response → simpan list model ke DB (provider_id, model_id, model_name)
+4. User bikin agent → pilih provider → model dropdown auto-populate dari DB
+5. User klik "Refresh models" → re-fetch dari provider API
+
+**Fallback:** kalau provider API ga support `/v1/models` → user bisa manual add model-id (tapi ini exception, bukan default)
 
 ### 2e. UI/UX Overall — Masih Jelek
 
