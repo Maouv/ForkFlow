@@ -1,7 +1,7 @@
 # ForkFlow
 
 <p align="center">
-  <img src="frontend/public/logo.jpg" alt="ForkFlow Logo" width="200" />
+  <img src="frontend/public/logo.png" alt="ForkFlow Logo" width="200" />
 </p>
 
 <p align="center">Open-source, self-hosted AI agent orchestration platform with a visual node-based flow editor.</p>
