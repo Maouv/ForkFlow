@@ -26,8 +26,9 @@ def client():
         finally:
             db.close()
 
+    _auth = {"Authorization": "Basic YWRtaW46Y2hhbmdlbWU="}
     app.dependency_overrides[get_db] = override_get_db
-    c = TestClient(app)
+    c = TestClient(app, headers=_auth)
     c._test_session = TestingSession
     yield c
     app.dependency_overrides.clear()

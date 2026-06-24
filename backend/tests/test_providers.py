@@ -25,9 +25,10 @@ def client():
         finally:
             db.close()
 
+    _auth = {"Authorization": "Basic YWRtaW46Y2hhbmdlbWU="}
     app.dependency_overrides[get_db] = override_get_db
-    client = TestClient(app)
-    client._test_session = TestingSession  # ponytail: expose for direct DB access in tests
+    client = TestClient(app, headers=_auth)
+    client._test_session = TestingSession
     yield client
     app.dependency_overrides.clear()
     Base.metadata.drop_all(engine)

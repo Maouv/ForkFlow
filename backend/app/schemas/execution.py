@@ -1,27 +1,19 @@
 from datetime import datetime
-from enum import Enum
-from typing import Any
 
-from pydantic import BaseModel
-
-
-class ExecutionStatus(str, Enum):
-    pending = "pending"
-    running = "running"
-    completed = "completed"
-    failed = "failed"
+from pydantic import BaseModel, Field
 
 
 class ExecuteRequest(BaseModel):
-    input: str
+    input: str = Field(..., description="User input to start the flow")
 
 
 class NodeResultResponse(BaseModel):
     id: int
+    execution_id: int
     node_id: int
     status: str
-    input: Any | None
-    output: Any | None
+    input: str | None
+    output: str | None
     error_message: str | None
     started_at: datetime
     completed_at: datetime | None
@@ -33,21 +25,19 @@ class NodeResultResponse(BaseModel):
 class ExecutionResponse(BaseModel):
     id: int
     flow_id: int
-    status: ExecutionStatus
+    status: str
     started_at: datetime
     completed_at: datetime | None
     input: str | None
     output: str | None
-    node_results: list[NodeResultResponse] = []
 
     model_config = {"from_attributes": True}
 
 
-class ExecutionListItem(BaseModel):
-    id: int
-    flow_id: int
-    status: ExecutionStatus
-    started_at: datetime
-    completed_at: datetime | None
+class ExecutionDetailResponse(BaseModel):
+    execution: ExecutionResponse
+    node_results: list[NodeResultResponse]
 
-    model_config = {"from_attributes": True}
+
+class ExecutionIdResponse(BaseModel):
+    execution_id: int
