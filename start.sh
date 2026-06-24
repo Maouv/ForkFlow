@@ -21,6 +21,7 @@ echo "  → http://${FORKFLOW_HOST}:${FORKFLOW_PORT}"
 echo "  → Press Ctrl+C to stop"
 echo ""
 
+cd backend
 exec uvicorn app.main:app \
   --host "$FORKFLOW_HOST" \
   --port "$FORKFLOW_PORT"
