@@ -41,7 +41,7 @@ class NodeRunner:
         if not provider:
             raise Exception(f"Provider not found for agent '{agent.name}'")
 
-        api_key = decrypt_api_key(provider.encrypted_api_key) or ""
+        api_key = decrypt_api_key(provider.api_key_encrypted) or ""
 
         # Build tool prompt
         tools = agent.tools or []

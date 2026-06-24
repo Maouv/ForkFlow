@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.auth import verify_auth
 from app.database import Base, engine
 from app.engine.ws_manager import ws_manager
-from app.routers import providers, agents, flows, executions
+from app.routers import providers, agents, flows, executions, auth
 
 Base.metadata.create_all(bind=engine)
 
@@ -18,6 +18,8 @@ app.add_middleware(
 
 auth_dep = [Depends(verify_auth)]
 
+# Auth router: /status & /setup are public, /change-password has its own auth
+app.include_router(auth.router)
 app.include_router(providers.router, dependencies=auth_dep)
 app.include_router(agents.router, dependencies=auth_dep)
 app.include_router(flows.router, dependencies=auth_dep)

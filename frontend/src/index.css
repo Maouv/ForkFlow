@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/*
+  ForkFlow design system
+  Strategy: Restrained — tinted neutrals + warm amber accent ≤10%
+  Scene: Developer building agent workflows in focused sessions.
+  Dark theme: node graph readability, reduced eye strain.
+
+  All colors in OKLCH. Hue 55 = warm neutral axis.
+*/
+
+@theme {
+  /* Surfaces */
+  --color-base: oklch(0.16 0.006 55);
+  --color-surface: oklch(0.21 0.006 55);
+  --color-elevated: oklch(0.25 0.006 55);
+
+  /* Text */
+  --color-ink: oklch(0.93 0.004 55);
+  --color-muted: oklch(0.66 0.006 55);
+  --color-dim: oklch(0.52 0.006 55);
+
+  /* Accent — warm amber (fork metal, execution energy) */
+  --color-accent: oklch(0.72 0.15 55);
+  --color-accent-hover: oklch(0.77 0.16 55);
+  --color-accent-muted: oklch(0.72 0.15 55 / 0.15);
+
+  /* Semantic */
+  --color-success: oklch(0.68 0.15 145);
+  --color-danger: oklch(0.64 0.18 25);
+  --color-warning: oklch(0.72 0.15 85);
+
+  /* Lines */
+  --color-line: oklch(0.28 0.006 55);
+  --color-line-strong: oklch(0.34 0.006 55);
+
+  /* Typography */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line-strong);
+    border-radius: var(--radius-sm);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-dim);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* React Flow dark theme overrides */
+.react-flow__edge-path {
+  stroke: var(--color-line-strong);
+  stroke-width: 1.5;
+}
+
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:focus .react-flow__edge-path {
+  stroke: var(--color-accent);
+  stroke-width: 2;
+}
+
+.react-flow__controls button {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-line) !important;
+  color: var(--color-muted) !important;
+}
+
+.react-flow__controls button:hover {
+  background: var(--color-elevated) !important;
+  color: var(--color-ink) !important;
+}
+
+.react-flow__attribution {
+  background: transparent !important;
+  color: var(--color-dim) !important;
+  font-size: 9px !important;
+}
