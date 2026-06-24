@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import client from "../../api/client";
 import type { Provider, ProviderCreate } from "../../types";
 
