@@ -51,7 +51,7 @@ cd ForkFlow
 
 # 1. Configure environment
 cp .env.example .env
-# Edit .env: set initial admin credentials + generate encryption key
+# Edit .env: set initial admin credentials (encryption key auto-generated if empty)
 
 # 2. Build and start
 docker compose up -d --build
@@ -68,16 +68,11 @@ docker compose up -d --build
 |---|---|---|
 | `FORKFLOW_USERNAME` | No* | Default admin username (used only before web setup) |
 | `FORKFLOW_PASSWORD` | No* | Default admin password (used only before web setup) |
-| `FORKFLOW_ENCRYPTION_KEY` | Yes | Fernet key for encrypting provider API keys |
+| `FORKFLOW_ENCRYPTION_KEY` | No | Fernet key for encrypting provider API keys (auto-generated if empty) |
 | `FORKFLOW_DATABASE_PATH` | No | SQLite path (default: `/data/forkflow.db`) |
 | `FORKFLOW_SANDBOX_PATH` | No | Tool sandbox directory (default: `/data/sandbox`) |
 
 *After completing first-run setup via the web UI, DB credentials take precedence over env vars.
-
-**Generate encryption key:**
-```bash
-python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-```
 
 ---
 
