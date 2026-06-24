@@ -1,8 +1,8 @@
-# ForkFlow
-
 <p align="center">
   <img src="frontend/public/logo.png" alt="ForkFlow Logo" width="200" />
 </p>
+
+<h1 align="center">ForkFlow</h1>
 
 <p align="center">Open-source, self-hosted AI agent orchestration platform with a visual node-based flow editor.</p>
 
@@ -257,45 +257,6 @@ pytest -v
 ```
 
 **125 tests** covering: providers, agents, flows, executions, executor, router, memory, tools, WebSocket, auth setup, crypto, and a full E2E integration test.
-
----
-
-## Roadmap
-
-### Phase 1 (current — MVP)
-- [x] Agent CRUD + profiles + toggle
-- [x] Provider config (openai_compatible + anthropic)
-- [x] Visual node editor (React Flow)
-- [x] Node types: conversation, processor
-- [x] Sequential + conditional flow
-- [x] Conditional routing: contains, not_contains, json_path
-- [x] Session memory
-- [x] Built-in tools: 5 tools (sandboxed)
-- [x] Manual trigger + execution history
-- [x] WebSocket live logs
-- [x] First-run setup + Basic Auth
-- [x] API key encryption at rest
-- [x] Docker Compose deploy
-- [x] E2E integration test
-- [x] README + docs
-
-### Phase 2 (planned)
-- [ ] Hybrid + formatter node types
-- [ ] Parallel flow execution
-- [ ] Regex + starts_with condition types
-- [ ] External provider as node (`custom_http`)
-- [ ] Retry failed agent (without re-running entire flow)
-- [ ] Persistent + hybrid memory types
-- [ ] Selective conversation scope
-- [ ] Additional tools: `read_json`, `write_json`, `list_directory`, `delete_file`, `execute_command`, `log`, `wait`
-
-### Phase 3 (future)
-- [ ] LLM response streaming via WebSocket
-- [ ] Webhook + scheduled triggers
-- [ ] Token/cost tracking per execution
-- [ ] Loop + subflow support
-- [ ] Flow versioning
-- [ ] Multi-user support
 
 ---
 
