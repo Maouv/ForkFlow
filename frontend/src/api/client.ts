@@ -1,7 +1,5 @@
 import axios from "axios";
 
-/// <reference types="vite/client" />
-
 const STORAGE_KEY = "forkflow_auth";
 
 /** Get stored Basic Auth header or null. */
