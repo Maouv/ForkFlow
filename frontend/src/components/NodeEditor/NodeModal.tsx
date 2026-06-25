@@ -43,13 +43,13 @@ export default function NodeModal() {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-0 sm:p-4"
-      onClick={closeNodeEditor}
+      className="fixed bottom-0 left-0 right-0 z-40 flex max-h-[70vh] flex-col border-t border-line bg-surface shadow-lg sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-[80vh] sm:max-w-md sm:border"
     >
-      <div
-        className="flex h-full w-full flex-col bg-surface sm:h-auto sm:max-h-[85vh] sm:max-w-2xl sm:border sm:border-line"
-        onClick={(e) => e.stopPropagation()}
-      >
+      {/* Drag handle (mobile) */}
+      <div className="flex justify-center pt-2 sm:hidden">
+        <div className="h-1 w-10 rounded bg-line-strong" />
+      </div>
+
         {/* Header */}
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-dim shrink-0">
@@ -97,7 +97,6 @@ export default function NodeModal() {
           {activeTab === "test" && <NodeModalTest />}
           {activeTab === "notes" && <NodeModalNotes nodeId={node.id} config={config} />}
         </div>
-      </div>
     </div>
   );
 }
