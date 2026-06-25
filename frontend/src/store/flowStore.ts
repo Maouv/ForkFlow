@@ -19,6 +19,7 @@ interface FlowState {
   edges: Edge[];
   selectedNodeId: string | null;
   selectedEdgeId: string | null;
+  editingNodeId: string | null;
   loading: boolean;
   saving: boolean;
 
@@ -34,7 +35,10 @@ interface FlowState {
   ) => void;
   selectNode: (id: string | null) => void;
   selectEdge: (id: string | null) => void;
+  openNodeEditor: (id: string) => void;
+  closeNodeEditor: () => void;
   updateNodeData: (id: string, patch: Partial<NodeData>) => void;
+  updateNodeConfig: (id: string, key: string, value: unknown) => void;
   updateEdgeData: (id: string, patch: Record<string, unknown>) => void;
   saveGraph: () => Promise<void>;
 }
@@ -46,6 +50,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
   edges: [],
   selectedNodeId: null,
   selectedEdgeId: null,
+  editingNodeId: null,
   loading: false,
   saving: false,
 
@@ -95,7 +100,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
       id,
       type,
       position,
-      data: { label: `${type} node`, agent_profile_id: null, conversation_scope: "full_history", config: {} },
+      data: { label: `${type} node`, agent_profile_id: null, config: {} },
     };
     const nodes = [...get().nodes, node];
     // ponytail: auto-edge when sourceNodeId present, reuse onConnect shape
@@ -110,12 +115,25 @@ export const useFlowStore = create<FlowState>((set, get) => ({
 
   selectNode: (id) => set({ selectedNodeId: id, selectedEdgeId: null }),
   selectEdge: (id) => set({ selectedEdgeId: id, selectedNodeId: null }),
+  openNodeEditor: (id) => set({ editingNodeId: id, selectedNodeId: id, selectedEdgeId: null }),
+  closeNodeEditor: () => set({ editingNodeId: null }),
 
   updateNodeData: (id, patch) => {
     set({
       nodes: get().nodes.map((n) =>
         n.id === id ? { ...n, data: { ...n.data, ...patch } } : n,
       ),
+    });
+  },
+
+  updateNodeConfig: (id, key, value) => {
+    set({
+      nodes: get().nodes.map((n) => {
+        if (n.id !== id) return n;
+        const data = n.data as Record<string, unknown>;
+        const config = (data.config as Record<string, unknown>) ?? {};
+        return { ...n, data: { ...data, config: { ...config, [key]: value } } };
+      }),
     });
   },
 

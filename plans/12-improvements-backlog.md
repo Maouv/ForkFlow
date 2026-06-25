@@ -87,6 +87,19 @@ Status: **Recorded** — belum dikerjakan, untuk didiskusikan & dikerjakan di Ph
 
 ---
 
+## 2f. Node Test Tab — Backend Single-Node Execution
+
+**Masalah:** Test tab di node modal butuh endpoint untuk run 1 node in isolation.
+Backend saat ini cuma support run entire flow (`POST /api/flows/{id}/execute`).
+
+**Target:**
+- `POST /api/nodes/{node_id}/test` — run single node dgn sample input
+- Return: output string + metrics (duration_ms, token_count)
+- Reuse existing `node_runner.py` logic
+- Handle: no agent attached, no upstream context, tool calls
+
+---
+
 ## 3. Prioritas
 
 Kalau dikerjakan, urutkan:

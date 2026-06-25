@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useFlowStore } from "../store/flowStore";
 import FlowCanvas from "../components/NodeEditor/FlowCanvas";
 import PropertiesPanel from "../components/NodeEditor/PropertiesPanel";
+import NodeModal from "../components/NodeEditor/NodeModal";
 import client from "../api/client";
 import type { Flow } from "../types";
 
@@ -244,6 +245,8 @@ export default function FlowEditorPage() {
           </div>
         </div>
       )}
+
+      <NodeModal />
     </div>
   );
 }
