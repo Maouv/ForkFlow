@@ -60,6 +60,7 @@ export default function FlowCanvas() {
       >
         <Background gap={20} size={1} color="oklch(0.25 0 0)" />
         <Controls
+          position="top-right"
           className="!border-line !bg-surface !shadow-sm"
           showInteractive={false}
         />

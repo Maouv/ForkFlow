@@ -45,11 +45,6 @@ export default function NodeModal() {
     <div
       className="fixed bottom-0 left-0 right-0 z-40 flex max-h-[70vh] flex-col border-t border-line bg-surface shadow-lg sm:bottom-4 sm:left-auto sm:right-4 sm:max-h-[80vh] sm:max-w-md sm:border"
     >
-      {/* Drag handle (mobile) */}
-      <div className="flex justify-center pt-2 sm:hidden">
-        <div className="h-1 w-10 rounded bg-line-strong" />
-      </div>
-
         {/* Header */}
         <div className="flex items-center gap-3 border-b border-line px-4 py-3">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-dim shrink-0">
@@ -94,7 +89,7 @@ export default function NodeModal() {
         <div className="flex-1 overflow-y-auto p-4">
           {activeTab === "parameters" && <NodeModalParameters nodeId={node.id} data={data} config={config} />}
           {activeTab === "settings" && <NodeModalSettings nodeId={node.id} config={config} />}
-          {activeTab === "test" && <NodeModalTest />}
+          {activeTab === "test" && <NodeModalTest nodeId={node.id} />}
           {activeTab === "notes" && <NodeModalNotes nodeId={node.id} config={config} />}
         </div>
     </div>

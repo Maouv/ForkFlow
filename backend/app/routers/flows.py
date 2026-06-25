@@ -1,8 +1,11 @@
+import time
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Flow, Node, Edge
+from app.engine.node_runner import NodeRunner
 from app.schemas.flow import (
     FlowCreate,
     FlowUpdate,
@@ -10,6 +13,8 @@ from app.schemas.flow import (
     FlowListItem,
     NodeSchema,
     EdgeSchema,
+    NodeTestRequest,
+    NodeTestResponse,
 )
 
 router = APIRouter(prefix="/api/flows", tags=["flows"])
@@ -128,3 +133,29 @@ def delete_flow(flow_id: int, db: Session = Depends(get_db)):
         raise HTTPException(404, "Flow not found")
     db.delete(flow)
     db.commit()
+
+
+@router.post("/{flow_id}/nodes/{node_id}/test", response_model=NodeTestResponse)
+async def test_node(
+    flow_id: int,
+    node_id: int,
+    body: NodeTestRequest,
+    db: Session = Depends(get_db),
+):
+    node = db.get(Node, node_id)
+    if not node or node.flow_id != flow_id:
+        raise HTTPException(404, "Node not found in this flow")
+
+    runner = NodeRunner(db)
+    t0 = time.monotonic()
+    try:
+        result = await runner.run(node, body.input, context=[])
+    except Exception as e:
+        raise HTTPException(400, str(e))
+    elapsed_ms = int((time.monotonic() - t0) * 1000)
+
+    return NodeTestResponse(
+        output=result.output,
+        duration_ms=elapsed_ms,
+        token_count=result.token_count,
+    )

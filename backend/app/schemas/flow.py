@@ -101,3 +101,13 @@ class FlowListItem(BaseModel):
     updated_at: datetime
 
     model_config = {"from_attributes": True}
+
+
+class NodeTestRequest(BaseModel):
+    input: str
+
+
+class NodeTestResponse(BaseModel):
+    output: str
+    duration_ms: int
+    token_count: int | None = None

@@ -1,6 +1,7 @@
 import json
 import re
 import time
+from typing import NamedTuple
 
 from sqlalchemy.orm import Session
 
@@ -25,17 +26,22 @@ MAX_TOOL_ITERATIONS = 3
 TOOL_CALL_RE = re.compile(r"\[TOOL_CALL\](.*?)\[/TOOL_CALL\]", re.DOTALL)
 
 
+class NodeRunResult(NamedTuple):
+    output: str
+    token_count: int | None
+
+
 class NodeRunner:
     def __init__(self, db: Session):
         self.db = db
 
     async def run(
         self, node: Node, current_input: str, context: list[ContextEntry]
-    ) -> str:
+    ) -> NodeRunResult:
         agent = node.agent_profile
         if not agent:
             # No agent → pass through input
-            return current_input
+            return NodeRunResult(output=current_input, token_count=None)
 
         provider = self.db.get(Provider, agent.provider_id)
         if not provider:
@@ -58,6 +64,7 @@ class NodeRunner:
         model = agent.model or provider.default_model or ""
 
         # ReAct loop
+        response = ""
         for i in range(MAX_TOOL_ITERATIONS):
             response = await adapter.call(
                 base_url=provider.base_url,
@@ -70,7 +77,7 @@ class NodeRunner:
             # Check for tool call
             match = TOOL_CALL_RE.search(response)
             if not match:
-                return response
+                return NodeRunResult(output=response, token_count=None)
 
             # Execute tool
             tool_json = match.group(1).strip()
@@ -81,7 +88,11 @@ class NodeRunner:
             messages.append({"role": "user", "content": f"Tool result: {tool_result}"})
 
         # Max iterations reached
-        return response + "\n[Warning: max tool iterations reached]"
+        # ponytail: token_count null until adapter returns usage
+        return NodeRunResult(
+            output=response + "\n[Warning: max tool iterations reached]",
+            token_count=None,
+        )
 
     def _format_tools(self, tools: list[str]) -> str:
         if not tools:

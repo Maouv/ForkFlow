@@ -53,10 +53,11 @@ class FlowExecutor:
                 timeout = current_node.config.get("timeout_seconds", 60)
                 t0 = datetime.now(timezone.utc)
                 try:
-                    output = await asyncio.wait_for(
+                    result = await asyncio.wait_for(
                         self.runner.run(current_node, current_input, context),
                         timeout=timeout,
                     )
+                    output = result.output
                 except asyncio.TimeoutError:
                     raise Exception(
                         f"Node '{current_node.label}' timed out after {timeout}s"
