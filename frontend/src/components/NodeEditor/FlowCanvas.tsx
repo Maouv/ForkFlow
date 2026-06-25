@@ -25,7 +25,7 @@ function EmptyStateAdd() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div
-        className="pointer-events-auto absolute left-0 top-0"
+        className="nopan pointer-events-auto absolute left-0 top-0 z-50"
         style={{
           transform: `translate(${x + 250 * zoom}px, ${y + 200 * zoom}px) scale(${zoom})`,
           transformOrigin: "0 0",
