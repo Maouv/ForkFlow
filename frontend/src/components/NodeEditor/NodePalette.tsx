@@ -19,12 +19,12 @@ export default function NodePalette() {
 
   return (
     <div className="flex flex-col gap-3 p-4">
-      <p className="text-[11px] font-medium uppercase tracking-wide text-dim">Add Node</p>
+      <p className="text-[10px] font-semibold uppercase tracking-wide text-dim">Add Node</p>
       {paletteItems.map((item) => (
         <button
           key={item.type}
           onClick={() => addNode(item.type, { x: 200, y: 150 })}
-          className="flex min-h-[44px] items-center gap-2.5 border border-line bg-surface px-3 py-2.5 text-left transition-colors hover:border-line-strong hover:bg-elevated"
+          className="flex min-h-[44px] items-center gap-2.5 border border-line bg-surface px-3 py-2.5 text-left transition-colors duration-150 outline-none hover:border-line-strong hover:bg-elevated focus-visible:border-ink focus-visible:bg-elevated"
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="shrink-0 text-muted">
             <path d={item.icon} />

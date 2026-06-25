@@ -18,14 +18,14 @@ const scopeTypes: { value: NodeData["conversation_scope"]; label: string }[] = [
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="flex flex-col gap-1.5">
-      <span className="text-[11px] font-medium uppercase tracking-wide text-dim">{label}</span>
+      <span className="text-[10px] font-semibold uppercase tracking-wide text-dim">{label}</span>
       {children}
     </label>
   );
 }
 
 const inputClass =
-  "min-h-[44px] border border-line bg-base px-3 py-2 text-[13px] text-ink outline-none focus:border-ink";
+  "min-h-[44px] border border-line bg-base px-3 py-2 text-[13px] text-ink outline-none transition-colors duration-150 focus:border-ink placeholder:text-dim";
 
 export default function PropertiesPanel() {
   const { nodes, edges, selectedNodeId, selectedEdgeId, updateNodeData, updateEdgeData } =
@@ -56,7 +56,7 @@ export default function PropertiesPanel() {
 
     return (
       <div className="flex flex-col gap-4 p-4">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-dim">Node Properties</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-dim">Node Properties</p>
 
         <Field label="Label">
           <input
@@ -111,7 +111,7 @@ export default function PropertiesPanel() {
 
     return (
       <div className="flex flex-col gap-4 p-4">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-dim">Edge Condition</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wide text-dim">Edge Condition</p>
 
         <Field label="Condition type">
           <select
