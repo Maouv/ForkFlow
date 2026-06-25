@@ -51,16 +51,16 @@ export default function FlowCanvas() {
         onPaneClick={handlePaneClick}
         fitView
         fitViewOptions={{ padding: 0.2 }}
-        panOnDrag={nodes.length > 0}
-        zoomOnPinch={nodes.length > 0}
-        zoomOnScroll={nodes.length > 0}
-        zoomOnDoubleClick={nodes.length > 0}
+        zoomOnPinch
+        panOnDrag
         selectNodesOnDrag={false}
         nodesConnectable
         edgesFocusable
         className="bg-base"
       >
-        <Background gap={20} size={1} color="oklch(0.25 0 0)" />
+        {nodes.length > 0 && (
+          <Background gap={20} size={1} color="oklch(0.25 0 0)" />
+        )}
         <Controls
           position="top-right"
           className="!border-line !bg-surface !shadow-sm"
