@@ -3,7 +3,7 @@ import {
   ReactFlow,
   Background,
   Controls,
-  Panel,
+  ViewportPortal,
   type Node,
   type Edge,
 } from "@xyflow/react";
@@ -66,12 +66,13 @@ export default function FlowCanvas() {
           showInteractive={false}
         />
         {nodes.length === 0 && (
-          <Panel
-            position="center"
-            className="flex items-center justify-center"
-          >
-            <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
-          </Panel>
+          <ViewportPortal>
+            <div
+              style={{ position: "absolute", left: 250, top: 200 }}
+            >
+              <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
+            </div>
+          </ViewportPortal>
         )}
       </ReactFlow>
     </div>
