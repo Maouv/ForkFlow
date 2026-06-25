@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFlowStore } from "../store/flowStore";
 import FlowCanvas from "../components/NodeEditor/FlowCanvas";
-import NodePalette from "../components/NodeEditor/NodePalette";
 import PropertiesPanel from "../components/NodeEditor/PropertiesPanel";
 import client from "../api/client";
 import type { Flow } from "../types";
 
-type Panel = null | "palette" | "properties";
+type Panel = null | "properties";
 
 export default function FlowEditorPage() {
   const { flows, currentFlow, loading, saving, loadFlows, selectFlow, saveGraph } =
@@ -174,11 +173,6 @@ export default function FlowEditorPage() {
       {/* Editor body */}
       {currentFlow ? (
         <div className="flex flex-1 overflow-hidden">
-          {/* Desktop: left palette */}
-          <div className="hidden w-48 shrink-0 overflow-y-auto border-r border-line bg-surface md:block">
-            <NodePalette />
-          </div>
-
           <div className="relative flex-1">
             {loading ? (
               <div className="flex h-full items-center justify-center">
@@ -197,20 +191,7 @@ export default function FlowEditorPage() {
             <PropertiesPanel />
           </div>
 
-          {/* Mobile: bottom action buttons */}
-          <div className="absolute bottom-4 left-4 flex gap-2 md:hidden">
-            <button
-              onClick={() => setPanel(panel === "palette" ? null : "palette")}
-              className="flex h-11 w-11 items-center justify-center border border-line bg-surface shadow-md transition-colors duration-150 outline-none active:bg-elevated focus-visible:bg-elevated"
-              aria-label="Add node"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-ink">
-                <circle cx="6" cy="6" r="2" /><circle cx="18" cy="6" r="2" /><circle cx="12" cy="18" r="2" />
-                <path d="M7.5 7L11 16M16.5 7L13 16" strokeLinecap="round" />
-              </svg>
-            </button>
-          </div>
-
+          {/* Mobile: properties FAB */}
           <div className="absolute bottom-4 right-4 md:hidden">
             <button
               onClick={() => setPanel(panel === "properties" ? null : "properties")}
@@ -229,17 +210,14 @@ export default function FlowEditorPage() {
               <div className="absolute inset-0 z-20 bg-black/40 md:hidden" onClick={() => setPanel(null)} />
               <div className="absolute bottom-0 left-0 right-0 z-30 max-h-[60vh] overflow-y-auto border-t border-line bg-surface md:hidden">
                 <div className="flex items-center justify-between border-b border-line px-4 py-3">
-                  <span className="text-[13px] font-bold text-ink">
-                    {panel === "palette" ? "Add Node" : "Properties"}
-                  </span>
+                  <span className="text-[13px] font-bold text-ink">Properties</span>
                   <button onClick={() => setPanel(null)} className="p-1 text-dim transition-colors duration-150 outline-none hover:text-ink focus-visible:text-ink">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M6 6l12 12M6 18L18 6" strokeLinecap="round" />
                     </svg>
                   </button>
                 </div>
-                {panel === "palette" && <NodePalette />}
-                {panel === "properties" && <PropertiesPanel />}
+                <PropertiesPanel />
               </div>
             </>
           )}

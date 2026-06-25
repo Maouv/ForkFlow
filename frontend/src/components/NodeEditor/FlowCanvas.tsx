@@ -10,6 +10,7 @@ import "@xyflow/react/dist/style.css";
 
 import ConversationNode from "./nodes/ConversationNode";
 import ProcessorNode from "./nodes/ProcessorNode";
+import NodeQuickAdd from "./NodeQuickAdd";
 import { useFlowStore } from "../../store/flowStore";
 
 const nodeTypes = {
@@ -37,7 +38,7 @@ export default function FlowCanvas() {
   }, [selectNode, selectEdge]);
 
   return (
-    <div className="h-full w-full">
+    <div className="relative h-full w-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -50,11 +51,9 @@ export default function FlowCanvas() {
         onPaneClick={handlePaneClick}
         fitView
         fitViewOptions={{ padding: 0.2 }}
-        // Mobile: pinch zoom, single-finger pan
         zoomOnPinch
         panOnDrag
         selectNodesOnDrag={false}
-        // Touch-friendly defaults
         nodesConnectable
         edgesFocusable
         className="bg-base"
@@ -65,6 +64,14 @@ export default function FlowCanvas() {
           showInteractive={false}
         />
       </ReactFlow>
+
+      {nodes.length === 0 && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+          <div className="pointer-events-auto">
+            <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

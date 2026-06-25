@@ -27,20 +27,17 @@ interface FlowState {
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   onConnect: (conn: Connection) => void;
-  addNode: (type: NodeData["node_type"], position: { x: number; y: number }) => void;
+  addNode: (
+    type: NodeData["node_type"],
+    position: { x: number; y: number },
+    sourceNodeId?: string,
+  ) => void;
   selectNode: (id: string | null) => void;
   selectEdge: (id: string | null) => void;
   updateNodeData: (id: string, patch: Partial<NodeData>) => void;
   updateEdgeData: (id: string, patch: Record<string, unknown>) => void;
   saveGraph: () => Promise<void>;
 }
-
-const nodeColors: Record<string, string> = {
-  conversation: "#6b9fd4",
-  processor: "#7dba6f",
-  hybrid: "#d4a44d",
-  formatter: "#b8859e",
-};
 
 export const useFlowStore = create<FlowState>((set, get) => ({
   flows: [],
@@ -92,7 +89,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     });
   },
 
-  addNode: (type, position) => {
+  addNode: (type, position, sourceNodeId) => {
     const id = `temp_${Date.now()}`;
     const node: Node = {
       id,
@@ -100,7 +97,15 @@ export const useFlowStore = create<FlowState>((set, get) => ({
       position,
       data: { label: `${type} node`, agent_profile_id: null, conversation_scope: "full_history", config: {} },
     };
-    set({ nodes: [...get().nodes, node] });
+    const nodes = [...get().nodes, node];
+    // ponytail: auto-edge when sourceNodeId present, reuse onConnect shape
+    const edges = sourceNodeId
+      ? addEdge(
+          { source: sourceNodeId, target: id, data: { condition_type: "none", condition_value: null } },
+          get().edges,
+        )
+      : get().edges;
+    set({ nodes, edges, selectedNodeId: id, selectedEdgeId: null });
   },
 
   selectNode: (id) => set({ selectedNodeId: id, selectedEdgeId: null }),
@@ -150,5 +155,3 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     set({ saving: false });
   },
 }));
-
-export { nodeColors };

@@ -1,10 +1,14 @@
 import { Handle, Position, type NodeProps } from "@xyflow/react";
+import { useFlowStore } from "../../store/flowStore";
+import NodeQuickAdd from "../NodeQuickAdd";
 
-export default function ProcessorNode({ data, selected }: NodeProps) {
+export default function ProcessorNode({ id, data, selected }: NodeProps) {
   const label = (data as { label: string }).label;
+  const position = useFlowStore((s) => s.nodes.find((n) => n.id === id)?.position) ?? { x: 0, y: 0 };
+
   return (
     <div
-      className={`border bg-surface px-4 py-3 shadow-sm transition-colors duration-150 ${
+      className={`group relative border bg-surface px-4 py-3 shadow-sm transition-colors duration-150 ${
         selected ? "border-ink" : "border-line-strong"
       }`}
       style={{ minWidth: 150 }}
@@ -18,6 +22,12 @@ export default function ProcessorNode({ data, selected }: NodeProps) {
       </div>
       <p className="mt-1.5 text-[13px] font-bold text-ink truncate">{label}</p>
       <Handle type="source" position={Position.Right} className="!h-2.5 !w-2.5 !border !border-base !bg-line-strong" />
+      <NodeQuickAdd
+        sourceNodeId={id}
+        spawnPosition={{ x: position.x + 250, y: position.y }}
+        variant="handle"
+        visible={selected}
+      />
     </div>
   );
 }
