@@ -3,7 +3,7 @@ import {
   ReactFlow,
   Background,
   Controls,
-  ViewportPortal,
+  useViewport,
   type Node,
   type Edge,
 } from "@xyflow/react";
@@ -18,6 +18,24 @@ const nodeTypes = {
   conversation: ConversationNode,
   processor: ProcessorNode,
 };
+
+/** [+] empty state — ikut viewport transform tanpa masuk viewport DOM */
+function EmptyStateAdd() {
+  const { x, y, zoom } = useViewport();
+  return (
+    <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div
+        className="pointer-events-auto absolute left-0 top-0"
+        style={{
+          transform: `translate(${x + 250 * zoom}px, ${y + 200 * zoom}px) scale(${zoom})`,
+          transformOrigin: "0 0",
+        }}
+      >
+        <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
+      </div>
+    </div>
+  );
+}
 
 export default function FlowCanvas() {
   const { nodes, edges, onNodesChange, onEdgesChange, onConnect, selectNode, selectEdge } =
@@ -65,15 +83,7 @@ export default function FlowCanvas() {
           className="!border-line !bg-surface !shadow-sm"
           showInteractive={false}
         />
-        {nodes.length === 0 && (
-          <ViewportPortal>
-            <div
-              style={{ position: "absolute", left: 250, top: 200 }}
-            >
-              <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
-            </div>
-          </ViewportPortal>
-        )}
+        {nodes.length === 0 && <EmptyStateAdd />}
       </ReactFlow>
     </div>
   );
