@@ -52,3 +52,6 @@ sandbox/
 
 # Alembic versions are tracked, but not the db
 forkflow.db
+
+# claude code config
+.claude

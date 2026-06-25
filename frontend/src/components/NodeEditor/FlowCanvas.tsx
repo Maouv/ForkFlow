@@ -59,7 +59,7 @@ export default function FlowCanvas() {
         edgesFocusable
         className="bg-base"
       >
-        <Background gap={20} size={1} color="oklch(0.28 0.006 55)" />
+        <Background gap={20} size={1} color="oklch(0.25 0 0)" />
         <Controls
           className="!border-line !bg-surface !shadow-sm"
           showInteractive={false}

@@ -27,21 +27,21 @@ function Sidebar({ onNavigate, onChangePassword }: { onNavigate?: () => void; on
   };
 
   return (
-    <aside className="flex h-full w-56 flex-col border-r border-line bg-surface">
-      <div className="flex items-center gap-2.5 px-5 py-4">
-        <img src="/logo.png" alt="ForkFlow" width="24" height="24" className="shrink-0 rounded-sm" />
-        <span className="text-[15px] font-semibold tracking-tight text-ink">ForkFlow</span>
+    <aside className="flex h-full w-52 flex-col border-r border-line bg-surface">
+      <div className="flex items-center gap-3 px-5 py-5">
+        <img src="/logo.png" alt="ForkFlow" width="20" height="20" className="shrink-0" />
+        <span className="text-sm font-semibold tracking-tight text-ink">ForkFlow</span>
       </div>
-      <nav className="flex flex-1 flex-col gap-1 px-3 py-2">
+      <nav className="flex flex-1 flex-col gap-0.5 px-3">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             onClick={onNavigate}
             className={({ isActive }) =>
-              `rounded-md px-3 py-2.5 text-[13px] font-medium transition-colors ${
+              `px-3 py-2 text-[13px] font-medium transition-colors ${
                 isActive
-                  ? "bg-accent-muted text-accent"
+                  ? "bg-elevated text-ink"
                   : "text-muted hover:bg-elevated hover:text-ink"
               }`
             }
@@ -50,22 +50,22 @@ function Sidebar({ onNavigate, onChangePassword }: { onNavigate?: () => void; on
           </NavLink>
         ))}
       </nav>
-      <div className="flex flex-col gap-1 border-t border-line px-3 py-3">
+      <div className="flex flex-col gap-0.5 border-t border-line px-3 py-3">
         <button
           onClick={onChangePassword}
-          className="flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-[13px] font-medium text-muted transition-colors hover:bg-elevated hover:text-ink"
+          className="flex w-full items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-muted transition-colors hover:bg-elevated hover:text-ink"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <rect x="3" y="11" width="18" height="11" rx="2" />
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="11" width="18" height="11" rx="0" />
             <path d="M7 11V7a5 5 0 0110 0v4" />
           </svg>
           Change Password
         </button>
         <button
           onClick={handleLogout}
-          className="flex w-full items-center gap-2 rounded-md px-3 py-2.5 text-[13px] font-medium text-muted transition-colors hover:bg-elevated hover:text-ink"
+          className="flex w-full items-center gap-2.5 px-3 py-2 text-[13px] font-medium text-muted transition-colors hover:bg-elevated hover:text-ink"
         >
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Logout
@@ -155,7 +155,7 @@ export default function App() {
         <header className="flex items-center gap-3 border-b border-line bg-surface px-4 py-3 md:hidden">
           <button
             onClick={() => setDrawerOpen(true)}
-            className="flex h-9 w-9 items-center justify-center rounded-md text-muted hover:bg-elevated hover:text-ink"
+            className="flex h-9 w-9 items-center justify-center text-muted hover:bg-elevated hover:text-ink"
             aria-label="Menu"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

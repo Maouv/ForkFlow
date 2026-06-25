@@ -25,7 +25,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 }
 
 const inputClass =
-  "min-h-[44px] rounded-md border border-line bg-base px-3 py-2 text-[13px] text-ink outline-none focus:border-accent";
+  "min-h-[44px] border border-line bg-base px-3 py-2 text-[13px] text-ink outline-none focus:border-ink";
 
 export default function PropertiesPanel() {
   const { nodes, edges, selectedNodeId, selectedEdgeId, updateNodeData, updateEdgeData } =
