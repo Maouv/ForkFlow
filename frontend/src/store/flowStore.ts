@@ -35,6 +35,8 @@ interface FlowState {
   ) => void;
   selectNode: (id: string | null) => void;
   selectEdge: (id: string | null) => void;
+  removeNode: (id: string) => void;
+  removeEdge: (id: string) => void;
   openNodeEditor: (id: string) => void;
   closeNodeEditor: () => void;
   updateNodeData: (id: string, patch: Partial<NodeData>) => void;
@@ -115,6 +117,19 @@ export const useFlowStore = create<FlowState>((set, get) => ({
 
   selectNode: (id) => set({ selectedNodeId: id, selectedEdgeId: null }),
   selectEdge: (id) => set({ selectedEdgeId: id, selectedNodeId: null }),
+
+  removeNode: (id) =>
+    set({
+      nodes: get().nodes.filter((n) => n.id !== id),
+      edges: get().edges.filter((e) => e.source !== id && e.target !== id),
+      selectedNodeId: null,
+    }),
+
+  removeEdge: (id) =>
+    set({
+      edges: get().edges.filter((e) => e.id !== id),
+      selectedEdgeId: null,
+    }),
   openNodeEditor: (id) => set({ editingNodeId: id, selectedNodeId: id, selectedEdgeId: null }),
   closeNodeEditor: () => set({ editingNodeId: null }),
 

@@ -23,7 +23,7 @@ const inputClass =
   "min-h-[44px] border border-line bg-base px-3 py-2 text-[13px] text-ink outline-none transition-colors duration-150 focus:border-ink placeholder:text-dim";
 
 export default function PropertiesPanel() {
-  const { nodes, edges, selectedNodeId, selectedEdgeId, updateNodeData, updateEdgeData } =
+  const { nodes, edges, selectedNodeId, selectedEdgeId, updateNodeData, updateEdgeData, removeEdge } =
     useFlowStore();
   const [agents, setAgents] = useState<AgentProfile[]>([]);
 
@@ -113,6 +113,13 @@ export default function PropertiesPanel() {
             />
           </Field>
         )}
+
+        <button
+          onClick={() => removeEdge(selectedEdge.id)}
+          className="mt-2 min-h-[44px] border border-line bg-base px-3 py-2 text-[13px] font-medium text-dim transition-colors hover:border-ink hover:text-ink"
+        >
+          Disconnect
+        </button>
       </div>
     );
   }

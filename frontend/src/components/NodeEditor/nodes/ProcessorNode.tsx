@@ -8,6 +8,7 @@ export default function ProcessorNode({ id, data, selected }: NodeProps) {
   const notes = (config?.notes as string | undefined)?.trim();
   const position = useFlowStore((s) => s.nodes.find((n) => n.id === id)?.position) ?? { x: 0, y: 0 };
   const openNodeEditor = useFlowStore((s) => s.openNodeEditor);
+  const removeNode = useFlowStore((s) => s.removeNode);
 
   return (
     <div
@@ -29,6 +30,17 @@ export default function ProcessorNode({ id, data, selected }: NodeProps) {
       <Handle type="source" position={Position.Right} className="!h-2.5 !w-2.5 !border !border-base !bg-line-strong" />
 
       {selected && (
+        <>
+        <button
+          onClick={(e) => { e.stopPropagation(); removeNode(id); }}
+          className="absolute -top-2.5 -left-2.5 flex h-6 w-6 items-center justify-center border border-line bg-surface text-dim transition-colors hover:text-ink"
+          title="Delete node"
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <polyline points="3 6 5 6 21 6" />
+            <path d="M19 6l-2 14a2 2 0 01-2 2H9a2 2 0 01-2-2L5 6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+          </svg>
+        </button>
         <button
           onClick={(e) => { e.stopPropagation(); openNodeEditor(id); }}
           className="absolute -top-2.5 -right-2.5 flex h-6 w-6 items-center justify-center border border-line bg-surface text-dim transition-colors hover:text-ink"
@@ -42,6 +54,7 @@ export default function ProcessorNode({ id, data, selected }: NodeProps) {
             <line x1="17" y1="16" x2="23" y2="16" />
           </svg>
         </button>
+        </>
       )}
 
       <NodeQuickAdd
