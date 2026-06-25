@@ -12,11 +12,16 @@ import "@xyflow/react/dist/style.css";
 import ConversationNode from "./nodes/ConversationNode";
 import ProcessorNode from "./nodes/ProcessorNode";
 import NodeQuickAdd from "./NodeQuickAdd";
+import EdgeWithDelete from "./EdgeWithDelete";
 import { useFlowStore } from "../../store/flowStore";
 
 const nodeTypes = {
   conversation: ConversationNode,
   processor: ProcessorNode,
+};
+
+const edgeTypes = {
+  default: EdgeWithDelete,
 };
 
 /** [+] empty state — ikut viewport transform tanpa masuk viewport DOM */
@@ -62,6 +67,7 @@ export default function FlowCanvas() {
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
