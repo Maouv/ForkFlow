@@ -3,6 +3,7 @@ import {
   ReactFlow,
   Background,
   Controls,
+  Panel,
   type Node,
   type Edge,
 } from "@xyflow/react";
@@ -58,23 +59,21 @@ export default function FlowCanvas() {
         edgesFocusable
         className="bg-base"
       >
-        {nodes.length > 0 && (
-          <Background gap={20} size={1} color="oklch(0.25 0 0)" />
-        )}
+        <Background gap={20} size={1} color="oklch(0.25 0 0)" />
         <Controls
           position="top-right"
           className="!border-line !bg-surface !shadow-sm"
           showInteractive={false}
         />
-      </ReactFlow>
-
-      {nodes.length === 0 && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="pointer-events-auto">
+        {nodes.length === 0 && (
+          <Panel
+            position="center"
+            className="flex items-center justify-center"
+          >
             <NodeQuickAdd spawnPosition={{ x: 250, y: 200 }} variant="empty" />
-          </div>
-        </div>
-      )}
+          </Panel>
+        )}
+      </ReactFlow>
     </div>
   );
 }
