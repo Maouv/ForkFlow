@@ -26,6 +26,10 @@
   --color-danger: oklch(0.60 0.15 25);
   --color-warning: oklch(0.70 0.10 85);
 
+  /* Accent — light monochrome, primary actions */
+  --color-accent: oklch(0.85 0 0);
+  --color-accent-hover: oklch(0.80 0 0);
+
   /* Lines */
   --color-line: oklch(0.25 0 0);
   --color-line-strong: oklch(0.32 0 0);

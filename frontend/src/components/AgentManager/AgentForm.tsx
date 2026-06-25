@@ -136,7 +136,7 @@ export default function AgentForm({
               onClick={() => toggleTool(tool)}
               className={`min-h-[36px] rounded-md border px-3 py-1.5 text-[12px] font-medium transition-colors ${
                 form.tools.includes(tool)
-                  ? "border-accent bg-accent-muted text-accent"
+                  ? "border-accent bg-[oklch(0.25_0_0)] text-accent"
                   : "border-line text-muted hover:bg-elevated"
               }`}
             >

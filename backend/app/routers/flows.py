@@ -79,7 +79,7 @@ def update_flow(flow_id: int, body: FlowUpdate, db: Session = Depends(get_db)):
     if body.description is not None:
         flow.description = body.description
 
-    # ponytail: replace all nodes+edges in single transaction
+    # ponytail: replace all nodes+edges in single transaction. upgrade: batch insert if >100 nodes or perf bottleneck
     if body.nodes is not None or body.edges is not None:
         # Delete old
         db.query(Node).filter(Node.flow_id == flow_id).delete()
