@@ -51,8 +51,10 @@ export default function FlowCanvas() {
         onPaneClick={handlePaneClick}
         fitView
         fitViewOptions={{ padding: 0.2 }}
-        zoomOnPinch
         panOnDrag={nodes.length > 0}
+        zoomOnPinch={nodes.length > 0}
+        zoomOnScroll={nodes.length > 0}
+        zoomOnDoubleClick={nodes.length > 0}
         selectNodesOnDrag={false}
         nodesConnectable
         edgesFocusable
