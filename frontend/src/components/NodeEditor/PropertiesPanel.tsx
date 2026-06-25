@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { useFlowStore } from "../../store/flowStore";
 import client from "../../api/client";
-import type { AgentProfile, NodeData } from "../../types";
+import type { AgentProfile } from "../../types";
 
 const conditionTypes = [
   { value: "none", label: "None (always)" },
   { value: "contains", label: "Contains" },
   { value: "not_contains", label: "Not contains" },
   { value: "json_path", label: "JSON path" },
-];
-
-const scopeTypes: { value: NodeData["conversation_scope"]; label: string }[] = [
-  { value: "full_history", label: "Full history" },
-  { value: "previous_only", label: "Previous only" },
 ];
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
@@ -51,7 +46,6 @@ export default function PropertiesPanel() {
     const d = selectedNode.data as {
       label: string;
       agent_profile_id: number | null;
-      conversation_scope: NodeData["conversation_scope"];
     };
 
     return (
@@ -80,24 +74,6 @@ export default function PropertiesPanel() {
             {agents.map((a) => (
               <option key={a.id} value={a.id}>
                 {a.name}
-              </option>
-            ))}
-          </select>
-        </Field>
-
-        <Field label="Conversation scope">
-          <select
-            className={inputClass}
-            value={d.conversation_scope ?? "full_history"}
-            onChange={(e) =>
-              updateNodeData(selectedNode.id, {
-                conversation_scope: e.target.value as NodeData["conversation_scope"],
-              })
-            }
-          >
-            {scopeTypes.map((s) => (
-              <option key={s.value} value={s.value}>
-                {s.label}
               </option>
             ))}
           </select>
