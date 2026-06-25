@@ -60,8 +60,8 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     const nodes: Node[] = data.nodes.map((n) => ({
       id: String(n.id),
       type: n.node_type,
-      position: { x: n.position_x, y: n.position_y },
-      data: { label: n.label, agent_profile_id: n.agent_profile_id, conversation_scope: n.conversation_scope, config: n.config },
+      position: n.position,
+      data: { label: n.label, agent_profile_id: n.agent_profile_id, config: n.config },
     }));
     const edges: Edge[] = data.edges.map((e) => ({
       id: String(e.id),
@@ -137,15 +137,13 @@ export const useFlowStore = create<FlowState>((set, get) => ({
         node_type: n.type as NodeData["node_type"],
         label: (n.data as { label: string }).label,
         agent_profile_id: (n.data as { agent_profile_id: number | null }).agent_profile_id,
-        conversation_scope: (n.data as { conversation_scope?: NodeData["conversation_scope"] }).conversation_scope,
-        config: (n.data as { config?: Record<string, unknown> }).config,
-        position_x: n.position.x,
-        position_y: n.position.y,
+        config: (n.data as { config?: Record<string, unknown> }).config ?? {},
+        position: n.position,
       })),
       edges: edges.map((e) => ({
         source_node_id: Number(e.source),
         target_node_id: Number(e.target),
-        condition_type: (e.data as { condition_type: string | null }).condition_type as FlowGraphPut["edges"][number]["condition_type"],
+        condition_type: (e.data as { condition_type?: string | null })?.condition_type as FlowGraphPut["edges"][number]["condition_type"] ?? "none",
         condition_value: (e.data as { condition_value: string | null }).condition_value,
       })),
     };

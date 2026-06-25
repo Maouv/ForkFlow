@@ -59,16 +59,14 @@ export interface AgentUpdate {
 }
 
 // ---- Flow / Node / Edge ----
-export type NodeType = "conversation" | "processor" | "hybrid" | "formatter";
+export type NodeType = "conversation" | "processor";
 
 export interface NodeData {
   node_type: NodeType;
   label: string;
   agent_profile_id: number | null;
-  conversation_scope?: AgentProfile["conversation_scope"];
   config?: Record<string, unknown>;
-  position_x: number;
-  position_y: number;
+  position: { x: number; y: number };
 }
 
 export interface FlowNode extends NodeData {
@@ -79,7 +77,7 @@ export interface FlowNode extends NodeData {
 export interface EdgeData {
   source_node_id: number;
   target_node_id: number;
-  condition_type: "none" | "contains" | "not_contains" | "json_path" | null;
+  condition_type: "none" | "contains" | "not_contains" | "json_path";
   condition_value: string | null;
 }
 
