@@ -101,7 +101,7 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     // ponytail: auto-edge when sourceNodeId present, reuse onConnect shape
     const edges = sourceNodeId
       ? addEdge(
-          { source: sourceNodeId, target: id, data: { condition_type: "none", condition_value: null } },
+          { id: `temp_edge_${Date.now()}`, source: sourceNodeId, target: id, data: { condition_type: "none", condition_value: null } },
           get().edges,
         )
       : get().edges;

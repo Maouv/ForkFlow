@@ -1,5 +1,5 @@
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import { useFlowStore } from "../../store/flowStore";
+import { useFlowStore } from "../../../store/flowStore";
 import NodeQuickAdd from "../NodeQuickAdd";
 
 export default function ProcessorNode({ id, data, selected }: NodeProps) {
